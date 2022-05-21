@@ -103,8 +103,18 @@ public class QLSVFrame extends javax.swing.JFrame {
         rdoNu.setText("Nữ");
 
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setText("Xóa");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
@@ -125,6 +135,11 @@ public class QLSVFrame extends javax.swing.JFrame {
         btnGhi.setText("Ghi");
 
         btnThoat.setText("Thoát");
+        btnThoat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThoatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -325,6 +340,64 @@ public class QLSVFrame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Xóa thành công");
     }//GEN-LAST:event_btnXoaActionPerformed
 
+    private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnThoatActionPerformed
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        SinhVien sv = this.getFormData();
+        if (sv == null) {
+            return ;
+        }
+        
+        this.qlds.insert(sv);
+        this.loadTable();
+        this.clearForm();
+        JOptionPane.showMessageDialog(this, "Thêm thành công");
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int row = this.tblSV.getSelectedRow();
+        
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Chọn 1 dòng trên table");
+            return ;
+        }
+
+        SinhVien sv = this.getFormData();
+        if (sv == null) {
+            return ;
+        }
+        
+        this.qlds.update(row, sv);
+        this.loadTable();
+        this.clearForm();
+        JOptionPane.showMessageDialog(this, "Sửa thành công");
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    
+    private SinhVien getFormData()
+    {
+        String hoTen = this.txtHoTen.getText();
+        String maSV = this.txtMaSV.getText();
+        String diaChi = this.txtDiaChi.getText();
+        String cNganh = this.cbbCNganh.getSelectedItem().toString();
+        int gt = this.rdoNam.isSelected()? 1 : 0;
+        
+        if (
+            hoTen.trim().length() == 0 ||
+            maSV.trim().length() == 0 ||
+            diaChi.trim().length() == 0
+        ) {
+            JOptionPane.showMessageDialog(this, "Không được để trống");
+            return null;
+        }
+        
+        SinhVien sv = new SinhVien(maSV, cNganh, hoTen, diaChi, gt);
+        
+        return sv;
+    }
+    
     private void clearForm()
     {
         this.txtHoTen.setText("");
