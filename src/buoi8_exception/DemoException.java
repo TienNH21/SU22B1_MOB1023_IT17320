@@ -4,39 +4,31 @@ import java.util.Scanner;
 
 public class DemoException {
     public static void main(String[] args) {
-//        Scanner sc = new Scanner(System.in);
-//        
-//        try {
-//            int i = Integer.parseInt(sc.nextLine());
-//            System.out.println(i);
-//            System.out.println("Xử lý thành công");
-//        } catch (NumberFormatException e) {
-//            e.printStackTrace();
-//            System.out.println("Vui lòng chỉ nhập số");
-//        }
+        int[] a = new int[5];
+        Scanner sc = new Scanner(System.in);
         
-        String[] a = { "1", "2", "3", "a" };
-        
-        try {
-            for(String s: a) {
-                int i = Integer.parseInt(s);
-                System.out.println(i);
+        for (int i = 0; i < 6; i++) {
+            System.out.printf("Nhập vào số thứ %d: ", (i+1));
+            try {
+                a[i] = Integer.parseInt(sc.nextLine());
+                System.out.println("Giá trị vừa nhập: " + a[i]);
+            } catch (NumberFormatException e) {
+                System.out.println("Nhập sai");
+                e.printStackTrace();
+//                a = null;
+            } catch (NullPointerException e) {
+                System.out.println("Chưa khởi tạo");
+                e.printStackTrace();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Ngoài phạm vi mảng");
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                System.out.println("Kết thúc xử lý phần tử thứ " + (i + 1));
             }
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("Mảng a chưa được khởi tạo");
-        } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            System.out.println("Truy cập phần tử ngoài phạm vi của mảng");
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            System.out.println("Giá trị không phải là số");
-        } catch (Exception e) {
-            //
-        } finally {
-            System.out.println("Xử lý xong");
         }
-        
-        System.out.println("Xử lý kết thúc");
+
+        System.out.println("Kết thúc chương trình");
     }
 }
